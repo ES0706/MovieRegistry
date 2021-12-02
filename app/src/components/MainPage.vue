@@ -1,36 +1,42 @@
 <template>
   <div>
-    <ul>
-      <li v-for="item in movies" :key="item.name">
-        <p>{{item.name}}</p>
-      </li>
-    </ul>
+    <Header />
+    <MovieList :movies="context.movies" />
   </div>
 </template>
 
 <script lang="ts">
-import { ref, toRefs } from "@vue/reactivity";
-import { Options, Vue } from "vue-class-component";
-import IMovie from "../interfaces/IMovie";
+import { computed } from "@vue/reactivity";
+import { Options, Vue, setup } from "vue-class-component";
 import MovieApi from "../infrastructure/movieApi";
 import { onMounted } from "@vue/runtime-core";
-import useMovieRepositories from "../composables/useMovieRepositories";
+import { useStore } from "../store/index";
+import Header from "./Header.vue";
+import { MutationType } from "../store/mutations";
+import MovieList from "./MovieList.vue";
 
 @Options({
   props: {
     msg: String,
   },
-  setup(props: any){
-    const { movies, getMovies } = useMovieRepositories();
-
-    return {
-      repositories: getMovies,
-      movies
-    };
+  components: {
+    Header,
+    MovieList
   }
 })
 export default class HelloWorld extends Vue {
   msg!: string;
+  context = setup(() => {
+    const store = useStore();
+    const getMovies = async () => {
+      const movies = await MovieApi.getMovies();
+      store.commit(MutationType.SetMovies, movies);
+    };
+    onMounted(getMovies);
+    const movies = computed(() => store.state.movies);
+
+    return { getMovies, movies }
+  });
 }
 </script>
 

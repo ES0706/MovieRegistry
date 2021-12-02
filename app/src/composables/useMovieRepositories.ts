@@ -1,7 +1,7 @@
 import movieApi from "@/infrastructure/movieApi";
 import IMovie from "@/interfaces/IMovie";
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+import { onMounted, onBeforeMount } from "@vue/runtime-core";
 
 export default function useMovieRepositories() {
     const movies = ref<Array<IMovie>>([]);
@@ -9,8 +9,7 @@ export default function useMovieRepositories() {
         movies.value = await movieApi.getMovies();
     }
 
-    onMounted(getMovies);
-
+    onBeforeMount(getMovies);
     return {
         movies,
         getMovies
