@@ -61,7 +61,7 @@
                     <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                         {{ movie.director }}
                     </td>
-                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                    <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-900 text-center tableLongRow">
                         <div class="items-center">
                             <div v-if="Array.isArray(movie.writer)">
                                 <div v-for="writerItem in movie.writer" :key="writerItem" class="ml-1">
@@ -74,14 +74,16 @@
                         </div>
                     </td>
                     <td class="px-3 py-4 whitespace-nowrap">
-                        <div class="items-center text-sm">
+                        <div class="items-center text-sm tableLongRow">
                             <div v-for="actor in movie.actors" :key="actor" class="ml-1">
                                 {{ actor }}
                             </div>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        <a href="#" @click="editClicked(movie)" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        <br>
+                        <a href="#" @click="deleteClicked(movie)" class="text-indigo-600 hover:text-indigo-900">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -103,9 +105,18 @@ import IMovie from "../interfaces/IMovie";
 })
 export default class MovieList extends Vue {
     movies!: Array<IMovie>;
+    private editClicked(movie: IMovie) {
+        this.$emit("edit-clicked", movie);
+    }
+    private deleteClicked(movie: IMovie) {
+        this.$emit("delete-clicked", movie);
+    }
 }
 </script>
 
-<style lang="less">
-
+<style lang="less" scoped>
+.tableLongRow {
+    height: 80px;
+    overflow: auto;
+}
 </style>
