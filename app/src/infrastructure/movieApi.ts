@@ -8,8 +8,9 @@ const movieURL = "movies";
 class MovieApi implements IMovieApi{
     public async getMovies(): Promise<Array<IMovie>> {
         const response = await axios.get(`${serverURI}/${movieURL}`);
-
-        return response.data;
+        const data = response.data as Array<any>;
+        data.map((val) => val.releaseDate = val["release-date"]);
+        return data;
     }
 }
 export default new MovieApi();
