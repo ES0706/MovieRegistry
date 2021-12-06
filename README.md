@@ -1,2 +1,26 @@
-# MovieRegistry
-Zadanie pre srovnejto
+# app
+
+## Project setup
+```
+npm install
+```
+
+### Run local json dev server
+```
+npm run mockapi
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```

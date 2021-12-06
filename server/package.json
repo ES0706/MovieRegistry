@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "json-server": "^0.17.0"
-  },
-  "scripts": {
-    "mockapi": "npx json-server --id name --p 3000 movies.json"
-  }
-}
