@@ -5,7 +5,7 @@ import axios from "axios";
 const serverURI = "http://localhost:3000";
 const movieURL = "movies";
 
-class MovieApi implements IMovieApi{
+class MovieApi implements IMovieApi {
     public async getMovies(): Promise<Array<IMovie>> {
         const response = await axios.get(`${serverURI}/${movieURL}`);
         const data = response.data as Array<any>;

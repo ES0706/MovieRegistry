@@ -1,15 +1,19 @@
 <template>
   <div>
     <Header @add-movie="addClicked" />
-    <MovieList :movies="context.movies"
+    <MovieList
+      :movies="context.movies"
       @edit-clicked="editClicked"
-      @delete-clicked="deleteClicked" />
-    <EditModal v-if="showModal"
+      @delete-clicked="deleteClicked"
+    />
+    <EditModal
+      v-if="showModal"
       :movie="movieToEdit"
       :title="modalTitle"
       :editMode="editMode"
       @close-modal="closeModal"
-      @movie-saved="movieSaved" />
+      @movie-saved="movieSaved"
+    />
   </div>
 </template>
 
@@ -27,31 +31,27 @@ import IMovie from "../interfaces/IMovie";
 import { ActionTypes } from "../store/actions";
 
 @Options({
-  props: {
-    msg: String,
-  },
   components: {
     Header,
     MovieList,
-    EditModal
-  }
+    EditModal,
+  },
 })
 export default class HelloWorld extends Vue {
-  msg!: string;
   store = useStore();
   showModal = false;
   editMode = false;
-  modalTitle = '';
+  modalTitle = "";
   movieToEdit: IMovie = {
-    name: '',
+    name: "",
     year: 0,
     runtime: 0,
     categories: [],
-    releaseDate: '',
-    director: '',
+    releaseDate: "",
+    director: "",
     writer: [],
     actors: [],
-    storyline: ''
+    storyline: "",
   };
   context = setup(() => {
     const getMovies = async () => {
@@ -69,18 +69,18 @@ export default class HelloWorld extends Vue {
       }
     });
 
-    return { getMovies, movies, isLoading }
+    return { getMovies, movies, isLoading };
   });
 
   addClicked() {
-    this.modalTitle = 'Add a movie';
+    this.modalTitle = "Add a movie";
     this.editMode = false;
     this.openModal();
   }
 
   editClicked(movie: IMovie) {
     this.movieToEdit = movie;
-    this.modalTitle = 'Edit Movie';
+    this.modalTitle = "Edit Movie";
     this.editMode = true;
     this.openModal();
   }
@@ -107,6 +107,4 @@ export default class HelloWorld extends Vue {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
-
-</style>
+<style scoped lang="less"></style>
